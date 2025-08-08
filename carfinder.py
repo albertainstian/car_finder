@@ -27,36 +27,88 @@ def fetch(session, url, retries=2, timeout=15):
             last = e
             time.sleep(1)
     raise last
-
+    
 def parse_list(html, region):
+    from bs4 import BeautifulSoup
+    import re
     soup = BeautifulSoup(html, "lxml")
     now = datetime.now(timezone.utc).isoformat()
     out = []
-    for row in soup.select(".result-row, .cl-static-search-result"):
-        pid = row.get("data-pid") or row.get("data-id")
-        a = row.select_one("a.result-title, a.posting-title, .titlestring a")
+
+    # Try multiple container patterns (CL varies)
+    row_selectors = [
+        "li.result-row",                 # older
+        "li.cl-search-result",           # newer
+        ".cl-static-search-result",      # static SSR fragment
+    ]
+    rows = []
+    for sel in row_selectors:
+        rows = soup.select(sel)
+        if rows:
+            break
+
+    # If still nothing, dump a debug page once
+    if not rows:
+        try:
+            import os
+            os.makedirs("data", exist_ok=True)
+            open("data/_debug.html", "w", encoding="utf-8").write(html)
+            print("[debug] saved data/_debug.html (structure changed?)")
+        except Exception:
+            pass
+        return out
+
+    for row in rows:
+        pid = row.get("data-pid") or row.get("data-id") or ""
+
+        # Title + URL (try several patterns)
+        a = (
+            row.select_one("a.result-title")
+            or row.select_one("a.posting-title")
+            or row.select_one(".titlestring a")
+            or row.select_one("a.cl-app-anchor")
+            or row.select_one("a[href*='/cto/'], a[href*='/ctd/']")
+        )
         title = (a.get_text(strip=True) if a else "") or ""
         url = (a.get("href") if a else "") or ""
         if url and not url.startswith("http"):
             url = REGIONS[region] + url
-        price_tag = row.select_one(".result-price, .price")
+
+        # Price
+        price_tag = (
+            row.select_one(".result-price")
+            or row.select_one(".price")
+            or row.select_one("span[class*='price']")
+        )
         price_text = price_tag.get_text(strip=True) if price_tag else ""
-        price_digits = re.sub(r"[^\d]", "", price_text or "")
-        price = int(price_digits) if price_digits else ""
+        digits = re.sub(r"[^\d]", "", price_text)
+        price = int(digits) if digits else ""
+
+        # Location
         hood = row.select_one(".result-hood") or row.select_one(".location")
         loc = (hood.get_text(strip=True).strip("()") if hood else "") or ""
+
+        # Time
         t = row.select_one("time")
-        posted = t.get("datetime") if t and t.has_attr("datetime") else ""
-        if not pid:
-            # fallback from URL digits
+        posted = t.get("datetime") if (t and t.has_attr("datetime")) else ""
+        if not posted:
+            # Some variants stash it in title attribute
+            t2 = row.select_one("time[title]")
+            posted = t2.get("title") if t2 else ""
+
+        # Fallback pid from URL
+        if not pid and url:
             digits = re.sub(r"[^\d]", "", url)
             pid = digits[-10:] if digits else url
+
         if pid and title and url:
             out.append({
                 "id": str(pid), "title": title, "price": price, "location": loc,
                 "url": url, "posted_at": posted, "region": region, "created_ts": now
             })
     return out
+
+
 
 def search(query, regions, limit=50, sleep_s=1.5, since_days=None):
     cutoff = None
