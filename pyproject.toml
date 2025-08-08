@@ -1,2 +1,39 @@
+[project]
+name = "carfinder"
+version = "0.1.0"
+description = "Simple Craigslist car scraper + CSV/SQLite + quick EDA"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Your Name" }]
+dependencies = [
+  "requests>=2.31",
+  "beautifulsoup4>=4.12",
+  "lxml>=5.0",
+  "pandas>=2.0",
+]
+
+[project.scripts]
+car-find = "carfinder.cli:main"
+
+[tool.black]
+line-length = 100
+
 [tool.ruff]
 line-length = 100
+target-version = "py310"
+lint.select = ["E", "F", "W", "I", "UP"]
+lint.ignore = ["E203", "E501"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "black>=24.0",
+  "ruff>=0.4",
+]
