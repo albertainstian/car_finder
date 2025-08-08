@@ -15,3 +15,7 @@ __pycache__/
 *.sqlite
 *.log
 >>>>>>> 632080c (chore: move data to /data and ignore artifacts)
+data/
+*.csv
+.venv/
+__pycache__/
