@@ -3,4 +3,15 @@ __pycache__/
 .venv/
 .env
 *.db
+<<<<<<< HEAD
 *.csv
+=======
+*.sqlite
+*.log
+data/
+.venv/
+__pycache__/
+*.db
+*.sqlite
+*.log
+>>>>>>> 632080c (chore: move data to /data and ignore artifacts)
