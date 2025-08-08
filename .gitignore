@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Data artifacts
+*.db
+*.csv
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
