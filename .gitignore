@@ -19,3 +19,7 @@ data/
 *.csv
 .venv/
 __pycache__/
+data/
+*.csv
+.venv/
+__pycache__/
