@@ -27,3 +27,16 @@ data/
 *.csv
 .venv/
 __pycache__/
+data/
+*.csv
+*.db
+*.sqlite
+*.log
+.venv/
+__pycache__/
+data/
+*.csv
+*.db
+*.sqlite
+.venv/
+__pycache__/
