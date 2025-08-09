@@ -31,7 +31,7 @@ pip install "git+https://github.com/albertainstian/car_webscaper_data_ai_ml.git@
 python -m pip install --upgrade pip
 pip install requests beautifulsoup4 lxml pandas matplotlib
 
-python carfinder.py \
+python carfind.py \
   --query "Mazda CX-30" \
   --regions losangeles sandiego sfbay \
   --limit 30 --sleep 1.5 --since 14 \
@@ -46,4 +46,4 @@ car-find search \
   --limit 50 --sleep 1.5 --since 14 \
   --out data/cx30.csv --db data/cars.db
 **CLI:** `car-find ...`  
-**Module:** `python -m carfinder ...`
+**Module:** `python carfind.py ...`
