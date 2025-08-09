@@ -1,5 +1,6 @@
 [![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
 [![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
+[![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
 # Car Finder — Craigslist Scraper (CSV/SQLite + Quick EDA)
 
 Scrape car listings from Craigslist by **query** and **region(s)**, save to **CSV/SQLite**, and run a tiny **EDA** to visualize prices. Built as a lightweight, production-ish Python project you can extend.
