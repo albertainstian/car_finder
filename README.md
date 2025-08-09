@@ -31,3 +31,5 @@ pip install requests beautifulsoup4 lxml
 python scripts/eda_quick.py --csv data/cx30.csv --model "Mazda CX-30"
 
 [![CI](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/ci.yml/badge.svg)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions)
+
+[![CI](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/ci.yml/badge.svg)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions)
