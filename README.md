@@ -18,6 +18,13 @@ Scrape car listings from Craigslist by **query** and **region(s)**, save to **CS
 - 📊 Quick EDA script to plot a price histogram
 - 🧪 Tests + (optional) CI wiring
 
+- ## Install
+
+### Option 1 (recommended): Install from GitHub tag
+```bash
+pip install "git+https://github.com/albertainstian/car_webscaper_data_ai_ml.git@v0.1.0"
+
+
 ## Quickstart
 
 ```bash
