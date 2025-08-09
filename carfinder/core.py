@@ -4,6 +4,85 @@ from urllib.parse import urlencode
 import requests
 from bs4 import BeautifulSoup
 
+# ---- HOT PATCH START ----
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/124 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+def build_search_url(region: str, query: str, offset: int = 0) -> str:
+    # Wider search (title+body). Keep simple paging via ?s=
+    base = _region_base(region) if "_region_base" in globals() else REGIONS[region]  # works for both styles
+    from urllib.parse import urlencode
+    return f"{base}/search/cta?{urlencode({'query': query, 's': offset})}"
+
+def parse_listings(html: str, region: str):
+    # Robust selectors for newer CL markup
+    from bs4 import BeautifulSoup
+    from datetime import datetime, timezone
+    import re
+    soup = BeautifulSoup(html, "lxml")
+    now = datetime.now(timezone.utc).isoformat()
+    out = []
+
+    # try multiple row patterns
+    rows = []
+    for sel in ("li.result-row", "li.cl-search-result", ".cl-static-search-result"):
+        rows = soup.select(sel)
+        if rows: break
+
+    if not rows:
+        # dump a debug page once to inspect structure
+        import os
+        os.makedirs("data", exist_ok=True)
+        with open("data/_debug.html", "w", encoding="utf-8") as f: f.write(html)
+        print("[debug] saved data/_debug.html (no rows matched)")
+        return out
+
+    for row in rows:
+        pid = row.get("data-pid") or row.get("data-id") or ""
+        # title/url
+        a = (row.select_one("a.result-title") or
+             row.select_one("a.posting-title") or
+             row.select_one(".titlestring a") or
+             row.select_one("a.cl-app-anchor") or
+             row.select_one("a[href*='/cto/'], a[href*='/ctd/']"))
+        if not a: 
+            continue
+        title = a.get_text(strip=True)
+        url = a.get("href") or ""
+        if url and not url.startswith("http"):
+            base = _region_base(region) if "_region_base" in globals() else REGIONS[region]
+            url = base + url
+
+        # price
+        p = row.select_one(".result-price") or row.select_one(".price") or row.select_one("span[class*='price']")
+        digits = re.sub(r"[^\d]", "", p.get_text(strip=True) if p else "")
+        price = int(digits) if digits else None
+
+        # location
+        hood = row.select_one(".result-hood") or row.select_one(".location")
+        loc = hood.get_text(strip=True).strip("()") if hood else None
+
+        # posted time
+        t = row.select_one("time")
+        posted = t.get("datetime") if (t and t.has_attr("datetime")) else ""
+        if not posted:
+            t2 = row.select_one("time[title]")
+            posted = t2.get("title") if t2 else ""
+
+        if not pid and url:
+            d = re.sub(r"[^\d]", "", url)
+            pid = d[-10:] if d else url
+
+        if pid and title and url:
+            out.append({"id": str(pid), "title": title, "price": price, "location": loc,
+                        "url": url, "posted_at": posted, "region": region, "created_ts": now})
+    return out
+# ---- HOT PATCH END ----
+
+
 UA = {"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"}
 REGIONS = {
     "losangeles":"https://losangeles.craigslist.org",

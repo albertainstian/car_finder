@@ -1,3 +1,4 @@
+[![CI](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml) [![codecov](https://codecov.io/gh/albertainstian/car_webscaper_data_ai_ml/branch/main/graph/badge.svg)](https://codecov.io/gh/albertainstian/car_webscaper_data_ai_ml) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 [![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
 [![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
 [![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
@@ -37,3 +38,5 @@ car-find search \
   --regions losangeles sandiego sfbay \
   --limit 50 --sleep 1.5 --since 14 \
   --out data/cx30.csv --db data/cars.db
+**CLI:** `car-find ...`  
+**Module:** `python -m carfinder ...`
