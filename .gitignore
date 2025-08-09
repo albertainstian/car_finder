@@ -9,3 +9,8 @@ data/
 __pycache__/
 *.db
 *.sqlite
+data/
+.venv/
+__pycache__/
+*.db
+*.sqlite
