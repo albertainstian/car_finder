@@ -1,4 +1,37 @@
-# car_finder
-# car_finder
-# car_finder
-# car_finder
+[![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
+# Car Finder — Craigslist Scraper (CSV/SQLite + Quick EDA)
+
+Scrape car listings from Craigslist by **query** and **region(s)**, save to **CSV/SQLite**, and run a tiny **EDA** to visualize prices. Built as a lightweight, production-ish Python project you can extend.
+
+<!-- (Optional badges — update owner/repo if you want) -->
+<!-- [![CI](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)](https://github.com/<owner>/<repo>/actions/workflows/ci.yml) -->
+<!-- ![Python](https://img.shields.io/badge/python-3.10%2B-blue) -->
+
+## Features
+- 🧭 Search multiple regions in one run
+- ⏱️ Rate-limit friendly with `--sleep`
+- 🧹 Dedupe and optional `--since` filter (last N days)
+- 💾 Outputs: CSV and/or SQLite
+- 📊 Quick EDA script to plot a price histogram
+- 🧪 Tests + (optional) CI wiring
+
+## Quickstart
+
+```bash
+python -m pip install --upgrade pip
+pip install requests beautifulsoup4 lxml pandas matplotlib
+
+python carfinder.py \
+  --query "Mazda CX-30" \
+  --regions losangeles sandiego sfbay \
+  --limit 30 --sleep 1.5 --since 14 \
+  --out data/cx30.csv
+
+
+
+# Example: Mazda CX-30 across LA, SD, SF Bay
+car-find search \
+  --query "Mazda CX-30" \
+  --regions losangeles sandiego sfbay \
+  --limit 50 --sleep 1.5 --since 14 \
+  --out data/cx30.csv --db data/cars.db
