@@ -1,39 +1,35 @@
+# backup then replace pyproject.toml with a clean one
+cp pyproject.toml pyproject.toml.bak 2>/dev/null || true
+cat > pyproject.toml <<'EOF'
 [project]
 name = "carfinder"
 version = "0.1.0"
-description = "Simple Craigslist car scraper + CSV/SQLite + quick EDA"
+description = "Craigslist car scraper"
 readme = "README.md"
 requires-python = ">=3.10"
-authors = [{ name = "Your Name" }]
 dependencies = [
   "requests>=2.31",
   "beautifulsoup4>=4.12",
-  "lxml>=5.0",
-  "pandas>=2.0",
+  "lxml>=5.0"
 ]
 
 [project.scripts]
-car-find = "carfinder.cli:main"
-
-[tool.black]
-line-length = 100
-
-[tool.ruff]
-line-length = 100
-target-version = "py310"
-lint.select = ["E", "F", "W", "I", "UP"]
-lint.ignore = ["E203", "E501"]
-
-[tool.pytest.ini_options]
-addopts = "-q"
+car-find = "carfinder.core:main"
+core-find = "carfinder.core:main"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
+EOF
 
-[project.optional-dependencies]
-dev = [
-  "pytest>=8.0",
-  "black>=24.0",
-  "ruff>=0.4",
-]
+# ensure the module launcher exists (so `python -m carfinder` works too)
+cat > carfinder/__main__.py <<'PY'
+from .core import main
+if __name__ == "__main__":
+    raise SystemExit(main())
+PY
+
+# reinstall in editable mode
+. .venv/bin/activate 2>/dev/null || python -m venv .venv && . .venv/bin/activate
+python -m pip install -U pip
+pip install -e .

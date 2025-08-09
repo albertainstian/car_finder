@@ -1,3 +1,6 @@
+from .cli import main
+if __name__ == "__main__":
+    raise SystemExit(main())
 import argparse, csv, re, time
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlencode
