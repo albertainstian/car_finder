@@ -26,8 +26,10 @@ pip install "git+https://github.com/albertainstian/car_webscaper_data_ai_ml.git@
 ## Quickstart
 
 ```bash
-python -m pip install --upgrade pip
-pip install requests beautifulsoup4 lxml pandas matplotlib
+python -m venv .venv
+source .venv/bin/activate         
+python -m pip install -U pip    
+pip install -r requirements.txtulsoup4 lxml pandas matplotlib
 
 python carfind.py \
   --query "Mazda CX-30" \
