@@ -1,21 +1,20 @@
 Metadata-Version: 2.4
 Name: carfinder
 Version: 0.1.0
-Summary: Simple Craigslist car scraper + CSV/SQLite + quick EDA
-Author: Your Name
+Summary: CLI to scrape car listings to CSV/SQLite
+License: MIT
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: requests>=2.31
-Requires-Dist: beautifulsoup4>=4.12
-Requires-Dist: lxml>=5.0
-Requires-Dist: pandas>=2.0
-Provides-Extra: dev
-Requires-Dist: pytest>=8.0; extra == "dev"
-Requires-Dist: black>=24.0; extra == "dev"
-Requires-Dist: ruff>=0.4; extra == "dev"
+Requires-Dist: requests
+Requires-Dist: beautifulsoup4
+Requires-Dist: pandas
 Dynamic: license-file
 
+[![CI](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml) [![codecov](https://codecov.io/gh/albertainstian/car_webscaper_data_ai_ml/branch/main/graph/badge.svg)](https://codecov.io/gh/albertainstian/car_webscaper_data_ai_ml) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+[![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
+[![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
+[![Python tests](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/albertainstian/car_webscaper_data_ai_ml/actions/workflows/python-tests.yml)
 # Car Finder — Craigslist Scraper (CSV/SQLite + Quick EDA)
 
 Scrape car listings from Craigslist by **query** and **region(s)**, save to **CSV/SQLite**, and run a tiny **EDA** to visualize prices. Built as a lightweight, production-ish Python project you can extend.
@@ -32,13 +31,20 @@ Scrape car listings from Craigslist by **query** and **region(s)**, save to **CS
 - 📊 Quick EDA script to plot a price histogram
 - 🧪 Tests + (optional) CI wiring
 
+- ## Install
+
+### Option 1 (recommended): Install from GitHub tag
+```bash
+pip install "git+https://github.com/albertainstian/car_webscaper_data_ai_ml.git@v0.1.0"
+
+
 ## Quickstart
 
 ```bash
 python -m pip install --upgrade pip
 pip install requests beautifulsoup4 lxml pandas matplotlib
 
-python carfinder.py \
+python carfind.py \
   --query "Mazda CX-30" \
   --regions losangeles sandiego sfbay \
   --limit 30 --sleep 1.5 --since 14 \
@@ -52,3 +58,5 @@ car-find search \
   --regions losangeles sandiego sfbay \
   --limit 50 --sleep 1.5 --since 14 \
   --out data/cx30.csv --db data/cars.db
+**CLI:** `car-find ...`  
+**Module:** `python carfind.py ...`

@@ -1,10 +1,13 @@
 LICENSE
 README.md
 pyproject.toml
+src/carfinder/__init__.py
+src/carfinder/__main__.py
+src/carfinder/cli.py
 src/carfinder.egg-info/PKG-INFO
 src/carfinder.egg-info/SOURCES.txt
 src/carfinder.egg-info/dependency_links.txt
 src/carfinder.egg-info/entry_points.txt
 src/carfinder.egg-info/requires.txt
 src/carfinder.egg-info/top_level.txt
-tests/test_smoke.py
+tests/test_cli.py

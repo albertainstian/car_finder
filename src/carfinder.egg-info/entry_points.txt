@@ -1,2 +1,2 @@
 [console_scripts]
-car-find = carfinder.cli:main
+carfind = carfinder.cli:main
